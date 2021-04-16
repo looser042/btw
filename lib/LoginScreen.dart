@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
       var rr=jsonData["status"];
 
       print(rr);
-      if (jsonData["status"] == "null") {
+      if (jsonData["status"] == "error" ) {
         Fluttertoast.showToast(
           msg: '$rr',
           textColor: Colors.white,
@@ -37,6 +37,8 @@ class _LoginScreenState extends State<LoginScreen> {
           toastLength: Toast.LENGTH_SHORT,
           backgroundColor: Color(0xffFFA756),
           fontSize: 15.0);
+         // Navigator.push(
+           // context, MaterialPageRoute(builder: (context) => SignupScreen()));
 
       }
       else {

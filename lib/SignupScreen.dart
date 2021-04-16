@@ -30,8 +30,9 @@ class _SignupScreenState extends State<SignupScreen> {
       final responce = await http.post(url, body: value);
       var jsonData = json.decode(responce.body);
       var message = jsonData["message"];
-
+      var rr=jsonData["error"];
       print(message);
+      if(phone ==null){
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => HomeScreen()));
       Fluttertoast.showToast(
@@ -40,7 +41,16 @@ class _SignupScreenState extends State<SignupScreen> {
           gravity: ToastGravity.BOTTOM,
           toastLength: Toast.LENGTH_SHORT,
           backgroundColor: Color(0xffFFA756),
+          fontSize: 15.0);}
+          else{
+            Fluttertoast.showToast(
+          msg: '$rr',
+          textColor: Colors.white,
+          gravity: ToastGravity.BOTTOM,
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Color(0xffFFA756),
           fontSize: 15.0);
+          }
     } on Exception catch (e) {
       print(e);
     }
