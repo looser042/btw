@@ -26,24 +26,22 @@ class _LoginScreenState extends State<LoginScreen> {
       final responce = await http.post(url, body: value);
       var jsonData = json.decode(responce.body);
       var message = jsonData["message"];
-      var rr=jsonData["status"];
+     
 
-      print(rr);
+      print(message);
       if (jsonData["status"] == "error" ) {
         Fluttertoast.showToast(
-          msg: '$rr',
+          msg: '$message',
           textColor: Colors.white,
           gravity: ToastGravity.BOTTOM,
           toastLength: Toast.LENGTH_SHORT,
           backgroundColor: Color(0xffFFA756),
           fontSize: 15.0);
-         // Navigator.push(
-           // context, MaterialPageRoute(builder: (context) => SignupScreen()));
+         
 
       }
-      else {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      else if(jsonData["message"][0] == "These credentials do not match our records.") {
+        
          Fluttertoast.showToast(
           msg: '$message',
           textColor: Colors.white,
@@ -51,6 +49,11 @@ class _LoginScreenState extends State<LoginScreen> {
           toastLength: Toast.LENGTH_SHORT,
           backgroundColor: Color(0xffFFA756),
           fontSize: 15.0);
+      }
+      else{
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+
       }
     } on Exception catch (e) {
       print(e);

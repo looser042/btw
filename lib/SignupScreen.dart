@@ -16,41 +16,53 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController mail = TextEditingController();
   TextEditingController number = TextEditingController();
   TextEditingController pass = TextEditingController();
-  Future register(String phone, String password,String email,String uname,) async {
+  Future register(
+    String phone,
+    String password,
+    String email,
+    String uname,
+  ) async {
     Map value = {
-      "name":uname,
+      "name": uname,
       "mobile_no": phone,
-      "email":email,
+      "email": email,
       "password": password,
-      "password_confirm":password,
-      
+      "password_confirm": password,
     };
     try {
       var url = Uri.http('stepin.btwbs.com', '/api/passenger-register');
       final responce = await http.post(url, body: value);
       var jsonData = json.decode(responce.body);
       var message = jsonData["message"];
-      var rr=jsonData["error"];
+
       print(message);
-      if(phone ==null){
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
-      Fluttertoast.showToast(
-          msg: '$message',
-          textColor: Colors.white,
-          gravity: ToastGravity.BOTTOM,
-          toastLength: Toast.LENGTH_SHORT,
-          backgroundColor: Color(0xffFFA756),
-          fontSize: 15.0);}
-          else{
-            Fluttertoast.showToast(
-          msg: '$rr',
-          textColor: Colors.white,
-          gravity: ToastGravity.BOTTOM,
-          toastLength: Toast.LENGTH_SHORT,
-          backgroundColor: Color(0xffFFA756),
-          fontSize: 15.0);
-          }
+      if (jsonData["status"] == "error") {
+        Fluttertoast.showToast(
+            msg: '$message',
+            textColor: Colors.white,
+            gravity: ToastGravity.BOTTOM,
+            toastLength: Toast.LENGTH_SHORT,
+            backgroundColor: Color(0xffFFA756),
+            fontSize: 15.0);
+      } else if (jsonData["status"] == "error") {
+        Fluttertoast.showToast(
+            msg: '$message',
+            textColor: Colors.white,
+            gravity: ToastGravity.BOTTOM,
+            toastLength: Toast.LENGTH_SHORT,
+            backgroundColor: Color(0xffFFA756),
+            fontSize: 15.0);
+      } else if (jsonData["status"] == "success") {
+        Fluttertoast.showToast(
+            msg: '$message',
+            textColor: Colors.white,
+            gravity: ToastGravity.BOTTOM,
+            toastLength: Toast.LENGTH_SHORT,
+            backgroundColor: Color(0xffFFA756),
+            fontSize: 15.0);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      }
     } on Exception catch (e) {
       print(e);
     }
@@ -248,11 +260,13 @@ class _SignupScreenState extends State<SignupScreen> {
                       height: 50.0,
                       width: 250.0,
                       child: TextFormField(
-                        decoration: InputDecoration(
-                            hintText: "Refereal Code(Optional)",
-                            border: InputBorder.none,
-                            suffixIcon: Icon(Icons.info_outline_rounded,),)
-                      ),
+                          decoration: InputDecoration(
+                        hintText: "Refereal Code(Optional)",
+                        border: InputBorder.none,
+                        suffixIcon: Icon(
+                          Icons.info_outline_rounded,
+                        ),
+                      )),
                     ),
                   ],
                 ),
